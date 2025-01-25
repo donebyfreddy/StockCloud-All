@@ -1,0 +1,14 @@
+{
+    "name": "StockCloud",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "concurrently \"npm start --prefix Backend\" \"npm run dev --prefix Frontend\""
+    },
+    "devDependencies": {
+        "vite": "^6.0.3"
+    },
+    "dependencies": {
+        "@azure/static-web-apps-cli": "^2.0.2",
+        "concurrently": "^9.1.0"
+    }
+}
