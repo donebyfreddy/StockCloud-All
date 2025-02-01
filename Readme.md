@@ -1,29 +1,35 @@
- 
-# StockCloud - Inventory Management System hosted in Azure
+# StockCloud - Inventory Management System Hosted in Azure
 
-An Inventory Management System built with Vite, React for the frontend, and Node.js, Express, and SQL Server for the backend.
+**StockCloud** is an advanced Inventory Management System hosted on Azure, designed to manage and streamline your inventory with ease. The application is built using **Vite** and **React** for the frontend, and **Node.js**, **Express**, and **SQL Server** for the backend.
 
-NOT Finished, still working on it. Next upcoming project!!!
+> **Note:** This project is still under active development. More features and improvements will be added soon!
+
+---
 
 ## Table of Contents
 
 - [Features](#features)
 - [Folder Structure](#folder-structure)
 - [Prerequisites](#prerequisites)
+- [Environment Variables](#environment-variables)
 - [Installation](#installation)
 - [Running the Application](#running-the-application)
-- [Environment Variables](#environment-variables)
 - [API Endpoints](#api-endpoints)
 - [Contributing](#contributing)
 - [License](#license)
 
+---
+
 ## Features
 
-- User authentication and authorization
-- Manage products, companies, locations, and brands
-- Track product history
-- Dashboard with analytics
-- Responsive design with Tailwind CSS
+- **User Authentication and Authorization**: Secure user sign-up, login, and session management.
+- **Manage Inventory**: Handle products, companies, locations, and brands.
+- **Track Product History**: Keep a record of the product movements and changes.
+- **Analytics Dashboard**: Real-time analytics and insights for better decision-making.
+- **Responsive Design**: Built with **Tailwind CSS** to ensure a smooth experience on all devices.
+- **Hosted on Azure**: Utilizes Azure services for scalability and reliability.
+
+---
 
 ## Folder Structure
 
@@ -69,15 +75,92 @@ C:.
 │   │       storageRoutes.js
 │   │       userRoutes.js
 │   │
+└───Frontend
+    │   .env
+    │   .eslintrc.cjs
+    │   .gitignore
+    │   index.html
+    │   package-lock.json
+    │   package.json
+    │   postcss.config.js
+    │   README.md
+    │   tailwind.config.js
+    │   vite.config.js
+    │
+    ├───public
+    │       vite.svg
+    │
+    └───src
+        │   App.jsx
+        │   index.css
+        │   main.jsx
+        │   router.jsx
+        │
+        ├───assets
+        │       admin-logo.svg
+        │       authenticate.svg
+        │       menu.svg
+        │       react.svg
+        │       undraw_empty_re.svg
+        │       user-logo.svg
+        │
+        ├───components
+        │       HeaderBar.jsx
+        │       LoadingIndicator.jsx
+        │       LogoutButton.jsx
+        │       PopUpComponent.jsx
+        │       ShowErrorMessage.jsx
+        │       ShowSuccessMessage.jsx
+        │       SideNavbar.jsx
+        │       WarrantyExpiringProductsTableComponent.jsx
+        │
+        └───screens
+            │   InventoryFormScreen.jsx
+            │
+            ├───brands
+            │       BrandsScreen.jsx
+            │       EditBrandsScreen.jsx
+            │       NewBrandsScreen.jsx
+            │
+            ├───dashboard
+            │   │   DashBoardLayout.jsx
+            │   │   DashBoardScreen.jsx
+            │   │
+            │   └───components
+            │           AnalyticsComponent.jsx
+            │           PieChart.jsx
+            │
+            ├───locations
+            │       EditLocationScreen.jsx
+            │       LocationsScreen.jsx
+            │       NewLocationScreen.jsx
+            │
+            ├───login
+            │       AuthLayout.jsx
+            │       LoginScreen.jsx
+            │       SignupScreen.jsx
+            │
+            ├───product
+            │       AddNewProductScreen.jsx
+            │       ProductEditScreen.jsx
+            │       ProductHistoryScreen.jsx
+            │       ProductInfoScreen.jsx
+            │       ProductsScreen.jsx
+            │
+            └───users
+                │   UserManagementScreen.jsx
+                │
+                └───components
+                        ChangeRolePopup.jsx
+                        ManageUserTableRow.jsx
 
-```
 
 ## Prerequisites
 
 - Node.js
 - npm or yarn
 - SQL Server
-- 
+
 
 ## ENV
 
