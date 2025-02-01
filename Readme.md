@@ -2,7 +2,8 @@
 
 **StockCloud** is an advanced Inventory Management System hosted on Azure, designed to manage and streamline your inventory with ease. The application is built using **Vite** and **React** for the frontend, and **Node.js**, **Express**, and **SQL Server** for the backend.
 
-> **Note:** This project is still under active development. More features and improvements will be added soon!
+On Azure, it is hosted in **Static Web Apps**, **App Service**, **SQL Server**, and **Azure OpenAI**.
+
 
 ---
 
