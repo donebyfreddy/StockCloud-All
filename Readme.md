@@ -5,7 +5,7 @@
 On Azure, it is hosted in **Static Web Apps**, **App Service**, **SQL Server**, and **Azure OpenAI**.
 
 
-Full Documentation: "https://www.dropbox.com/scl/fi/4vgjicvtcqgcmjjfuhofk/StockCloud_Documentation.pdf?rlkey=rel7vzpukwmnqb3ky3np35pzw&e=1&st=1ubv2it2&dl=0"
+For **full documentation**, check [here](https://www.dropbox.com/scl/fi/4vgjicvtcqgcmjjfuhofk/StockCloud_Documentation.pdf?rlkey=rel7vzpukwmnqb3ky3np35pzw&e=1&st=1ubv2it2&dl=0)
 
 
 ---
