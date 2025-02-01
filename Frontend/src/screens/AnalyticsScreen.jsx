@@ -1,15 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Bar, Pie } from "react-chartjs-2";
-import LoadingIndicator from "../components/LoadingIndicator";
 import { REACT_APP_API_URL } from "../router";
 import { FaChartPie, FaChartBar } from "react-icons/fa";
 import Chart from "chart.js/auto"; // Import Chart.js
 
 function AnalyticsScreen() {
-  const [deviceData, setDeviceData] = useState([]); // Default to empty array
-  const [userData, setUserData] = useState([]); // Default to empty array
-  const [storageData, setStorageData] = useState([]); // Default to empty array
+  const [deviceData, setDeviceData] = useState([]);
+  const [userData, setUserData] = useState([]);
+  const [storageData, setStorageData] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -20,36 +19,21 @@ function AnalyticsScreen() {
   useEffect(() => {
     fetchAnalyticsData();
     return () => {
-      // Cleanup the charts when component is unmounted
-      if (barChartRef.current) {
-        barChartRef.current.destroy();
-      }
-      if (pieChartRef1.current) {
-        pieChartRef1.current.destroy();
-      }
-      if (pieChartRef2.current) {
-        pieChartRef2.current.destroy();
-      }
+      if (barChartRef.current) barChartRef.current.destroy();
+      if (pieChartRef1.current) pieChartRef1.current.destroy();
+      if (pieChartRef2.current) pieChartRef2.current.destroy();
     };
   }, []);
 
   const fetchAnalyticsData = async () => {
     try {
-      console.log("Fetching device data...");
       const deviceResponse = await axios.get(`${REACT_APP_API_URL}/api/devices/types/count`, { withCredentials: true });
-      console.log("Device data:", deviceResponse.data.devices); // Ensure accessing the right property
-  
-      console.log("Fetching user data...");
       const userResponse = await axios.get(`${REACT_APP_API_URL}/api/users/locations/count`, { withCredentials: true });
-      console.log("User data:", userResponse.data.users); // Ensure accessing the right property
-  
-      console.log("Fetching storage data...");
       const storageResponse = await axios.get(`${REACT_APP_API_URL}/api/storages/locations/count`, { withCredentials: true });
-      console.log("Storage data:", storageResponse.data.storages); // Ensure accessing the right property
-  
-      setDeviceData(deviceResponse.data.devices || []); // Ensure it's an empty array if no data
-      setUserData(userResponse.data.users || []); // Ensure it's an empty array if no data
-      setStorageData(storageResponse.data.storages || []); // Ensure it's an empty array if no data
+
+      setDeviceData(deviceResponse.data.devices || []);
+      setUserData(userResponse.data.users || []);
+      setStorageData(storageResponse.data.storages || []);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -60,43 +44,56 @@ function AnalyticsScreen() {
 
   const prepareDeviceChartData = () => {
     if (!Array.isArray(deviceData) || deviceData.length === 0) {
-      return { labels: ['No Data'], datasets: [{ label: "Device Types", data: [0], backgroundColor: "#4caf50" }] };
+      return { labels: ['No Data'], datasets: [{ label: "Device Types", data: [0], backgroundColor: "#FFEB3B" }] };
     }
 
+    const colors = deviceData.map((item, index) => index === 0 ? "#FFEB3B" : "#2196F3"); 
+
+
     return {
-      labels: deviceData.map((item) => item.type),
+      labels: deviceData.map((item) => `${item.type} (${item.count})`),
       datasets: [
         {
           label: "Device Types",
           data: deviceData.map((item) => item.count),
-          backgroundColor: "#4caf50",
+          backgroundColor: colors,
         },
       ],
     };
   };
 
   const prepareUserChartData = () => ({
-    labels: userData.length > 0 ? userData.map((item) => item.location) : ['No Data'],
+    labels: userData.length > 0 ? userData.map((item) => `${item.location} (${item.count})`) : ['No Data'],
     datasets: [
       {
         label: "Users per Location",
         data: userData.length > 0 ? userData.map((item) => item.count) : [0],
-        backgroundColor: "#2196f3",
+        backgroundColor: userData.length > 0
+          ? userData.map((_, index) => `hsl(${(index * 360) / userData.length}, 70%, 60%)`)
+          : ["#2196f3"],
+        hoverOffset: 8,
       },
     ],
   });
 
-  const prepareStorageChartData = () => ({
-    labels: storageData.length > 0 ? storageData.map((item) => item.locationName) : ['No Data'],
-    datasets: [
-      {
-        label: "Storages per Location",
-        data: storageData.length > 0 ? storageData.map((item) => item.count) : [0],
-        backgroundColor: "#ff9800",
-      },
-    ],
-  });
+  const prepareStorageChartData = () => {
+    return {
+      labels: storageData.length > 0 ? storageData.map((item) => `${item.locationName} (${item.count})`) : ['No Data'],
+      datasets: [
+        {
+          label: "Storages per Location",
+          data: storageData.length > 0 ? storageData.map((item) => item.count) : [0],
+          backgroundColor: storageData.length > 0
+            ? storageData.map((_, index) => `hsl(${(index * 200) / storageData.length + 200}, 70%, 60%)`) // Ensure blue hue by starting at 200° on the hue scale
+            : ["#2196F3"], // fallback color (blue)
+          hoverOffset: 8,
+        },
+      ],
+    };
+  };
   
+  
+
   const renderNoDataMessage = (data, chartType) => {
     if (!Array.isArray(data) || data.length === 0) {
       return (
@@ -110,7 +107,7 @@ function AnalyticsScreen() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center w-full h-full">
-        <LoadingIndicator />
+        <p>Loading...</p>
       </div>
     );
   }
@@ -123,21 +120,111 @@ function AnalyticsScreen() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-xl">
+        {/* Device Types Distribution */}
+        <div className="bg-white p-6 rounded-lg shadow-2xl transform transition-all hover:scale-105 hover:shadow-2xl">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">Device Types Distribution</h2>
-          <Bar ref={barChartRef} data={prepareDeviceChartData()} options={{ responsive: true }} />
+          <Pie
+            ref={pieChartRef1}
+            data={prepareDeviceChartData()}
+            options={{
+              responsive: true,
+              plugins: {
+                tooltip: {
+                  callbacks: {
+                    label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`,
+                  },
+                  backgroundColor: "rgba(0, 0, 0, 0.8)",
+                  titleFont: { weight: 'bold' },
+                  bodyFont: { size: 14 },
+                  displayColors: false,
+                },
+                legend: {
+                  position: 'top',
+                  labels: {
+                    font: { size: 14, weight: 'bold' },
+                    padding: 20,
+                    boxWidth: 15,
+                  },
+                },
+              },
+              animation: {
+                duration: 1200, // Smooth transition
+                easing: "easeOutBounce",
+              },
+            }}
+          />
           {renderNoDataMessage(deviceData, "Device Types")}
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-xl">
+        {/* Users by Location */}
+        <div className="bg-white p-6 rounded-lg shadow-2xl transform transition-all hover:scale-105 hover:shadow-2xl">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">Users by Location</h2>
-          <Pie ref={pieChartRef1} data={prepareUserChartData()} options={{ responsive: true }} />
+          <Pie
+            ref={pieChartRef2}
+            data={prepareUserChartData()}
+            options={{
+              responsive: true,
+              plugins: {
+                tooltip: {
+                  callbacks: {
+                    label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`,
+                  },
+                  backgroundColor: "rgba(0, 0, 0, 0.8)",
+                  titleFont: { weight: 'bold' },
+                  bodyFont: { size: 14 },
+                  displayColors: false,
+                },
+                legend: {
+                  position: 'top',
+                  labels: {
+                    font: { size: 14, weight: 'bold' },
+                    padding: 20,
+                    boxWidth: 15,
+                  },
+                },
+              },
+              animation: {
+                duration: 1200, // Smooth transition
+                easing: "easeOutBounce",
+              },
+            }}
+          />
           {renderNoDataMessage(userData, "Users")}
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-xl">
+        {/* Storages by Location */}
+        <div className="bg-white p-6 rounded-lg shadow-2xl transform transition-all hover:scale-105 hover:shadow-2xl">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">Storages by Location</h2>
-          <Pie ref={pieChartRef2} data={prepareStorageChartData()} options={{ responsive: true }} />
+          <Pie
+            ref={pieChartRef2}
+            data={prepareStorageChartData()}
+            options={{
+              responsive: true,
+              plugins: {
+                tooltip: {
+                  callbacks: {
+                    label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`,
+                  },
+                  backgroundColor: "rgba(0, 0, 0, 0.8)",
+                  titleFont: { weight: 'bold' },
+                  bodyFont: { size: 14 },
+                  displayColors: false,
+                },
+                legend: {
+                  position: 'top',
+                  labels: {
+                    font: { size: 14, weight: 'bold' },
+                    padding: 20,
+                    boxWidth: 15,
+                  },
+                },
+              },
+              animation: {
+                duration: 1200, // Smooth transition
+                easing: "easeOutBounce",
+              },
+            }}
+          />
           {renderNoDataMessage(storageData, "Storages")}
         </div>
       </div>

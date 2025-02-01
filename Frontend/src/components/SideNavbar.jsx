@@ -7,7 +7,7 @@ import { FiSettings, FiUser, FiSmartphone } from "react-icons/fi";
 
 import { FaUserAlt, FaDatabase, FaBlog, FaSleigh} from "react-icons/fa";
 import { BiCart, BiLocationPlus, BiUser, BiDevices, 
-  BiCode, BiSupport, BiBarChart, BiChat } from "react-icons/bi";
+  BiCode, BiSupport, BiBarChart, BiChat, BiInfoCircle } from "react-icons/bi";
 import LogoutButton from "./LogoutButton";
 
 const admin = 'admin';
@@ -21,6 +21,7 @@ function SideNavbar() {
       { link: `/${admin}/users/profile`, name: "Profile", icon: <FiUser />, end: true},
       { link: `/${admin}/support`, name: "Support & Assitance", icon: <BiSupport />, end: false },
       { link: `/${admin}/analytics`, name: "Analytics", icon: <BiBarChart />, end: false },
+      { link: `/${admin}/about`, name: "About", icon: <BiInfoCircle />, end: false },
 
     ],
   };

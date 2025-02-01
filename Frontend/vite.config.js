@@ -11,6 +11,7 @@ export default defineConfig({
     outDir: 'build', // Output directory for build
     rollupOptions: {
       input: './index.html', // Ensure this points to the correct entry point
+      //external: ["lucide-react"],
     },
   },
 });

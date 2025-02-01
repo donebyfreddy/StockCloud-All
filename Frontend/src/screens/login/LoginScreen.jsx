@@ -41,14 +41,15 @@ function LoginScreen() {
 
 
 
-      if (status === 201) {
+      if (status === 201 || status === 200) {
         history("/admin/dashboard"); // Use history function to redirect
       } else {
         alert("Wrong credentials. Check Email and password ");
       }
+      
     } catch (error) {
       console.error("Something went wrong during login:", error.response ? error.response.data : error.message);
-      alert("Something went wrong");
+      alert("Wrong credentials. Check Email and password");
     }
   }
 

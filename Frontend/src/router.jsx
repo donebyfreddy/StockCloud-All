@@ -38,6 +38,7 @@ import Settings from "./screens/other/Settings"
 import SqlScreen from "./screens/other/SqlScreen";
 import SupportScreen from "./screens/other/SupportScreen";
 import AiSQLScreen from "./screens/other/AiSQLScreen"
+import AboutScreen from "./screens/other/AboutScreen"
 
 
 
@@ -99,6 +100,7 @@ const router = createBrowserRouter([
       { path: "support", element: <SupportScreen/>}, 
       { path: "analytics", element: <AnalyticsScreen/>}, 
       { path: "chatbot", element: <AiSQLScreen/>}, 
+      { path: "about", element: <AboutScreen/>}, 
 
 
 
@@ -117,4 +119,6 @@ const router = createBrowserRouter([
 
 export default router;
 
+
 export const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+

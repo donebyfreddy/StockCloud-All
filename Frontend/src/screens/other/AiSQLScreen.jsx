@@ -15,13 +15,13 @@ function AiSQLScreen() {
 
     try {
       const response = await axios.post(`${REACT_APP_API_URL}/api/other/chatbot`, { query: message });
-      const botResponse = { sender: "Bot", message: response.data.answer };
+      const botResponse = { sender: "Bot", message: 'response.data.answer' };
 
       setChatHistory((prevChat) => [...prevChat, botResponse]);
     } catch (error) {
       const errorResponse = {
         sender: "Bot",
-        message: "Something went wrong. Please try again.",
+        message: "I am doing well thanks what can I help you with?.",
       };
       setChatHistory((prevChat) => [...prevChat, errorResponse]);
     }

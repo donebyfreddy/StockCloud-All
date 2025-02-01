@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ShowSuccessMessage from "../../components/ShowErrorMessage"; // Corrected typo
+import ShowSuccessMessage from "../../components/ShowSuccessMessage"; // Corrected typo
 import { REACT_APP_API_URL } from "../../router";
-
-
 
 function NewUserScreen() {
   const [error, setError] = useState("");
@@ -51,7 +49,7 @@ function NewUserScreen() {
       setError("");
       setUploading(true);
 
-      await axios.post(`${REACT_APP_API_URL}/api/users/register`, data, {
+      await axios.post(`${REACT_APP_API_URL}/api/users/createUser`, data, {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
@@ -59,6 +57,11 @@ function NewUserScreen() {
       });
 
       setSuccessMessage("User added successfully!");
+
+      // Reset the success message after 3 seconds
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000); // Message disappears after 3 seconds
     } catch (e) {
       setError(e.response?.data?.message || "An error occurred");
       console.error(e);
@@ -71,7 +74,11 @@ function NewUserScreen() {
     <div className="m-5">
       <h1 className="text-3xl font-semibold text-neutral-900">Add New User</h1>
       {error && <div className="text-red-500">{error}</div>}
-      {successMessage && <div className="text-green-500">{successMessage}</div>}
+      {successMessage && !error && (
+        <ShowSuccessMessage>
+          <div className="text-gray-900 text-lg">{successMessage}</div>
+        </ShowSuccessMessage>
+      )}
       <form onChange={onchangeHandler} onSubmit={handleUpdate}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
           <div>
@@ -132,10 +139,11 @@ function NewUserScreen() {
             <select
               id="role"
               name="role"
-              value={data.role || ""}
+              value={data.role || "user"} // Ensures "user" is the default value
               className="border border-neutral-500 rounded-md px-3 py-2 w-full outline-none"
               required
             >
+              <option value="" disabled>Select Role</option>
               <option value="user">User</option>
               <option value="admin">Admin</option>
               <option value="manager">Manager</option>
@@ -169,16 +177,34 @@ function NewUserScreen() {
           </div>
           <div>
             <label
-              htmlFor="contactNumber"
+              htmlFor="department"
+              className="block text-lg font-semibold text-neutral-800 mb-1"
+            >
+              Department
+            </label>
+            <select
+              id="department"
+              name="department"
+              value={data.department || ""}
+              className="border border-neutral-500 rounded-md px-3 py-2 w-full outline-none"
+            >
+              <option value="user">Marketing</option>
+              <option value="admin">IT</option>
+              <option value="manager">RRHH</option>
+            </select>
+          </div>
+          <div>
+            <label
+              htmlFor="number"
               className="block text-lg font-semibold text-neutral-800 mb-1"
             >
               Contact Number
             </label>
             <input
               type="tel"
-              id="contactNumber"
-              name="contactNumber"
-              value={data.contactNumber || ""}
+              id="number"
+              name="number"
+              value={data.number || ""}
               className="border border-neutral-500 rounded-md px-3 py-2 w-full outline-none"
               required
             />
@@ -211,12 +237,6 @@ function NewUserScreen() {
           {uploading ? "Adding..." : "Add User"}
         </button>
       </form>
-      <br />
-      {successMessage && (
-        <ShowSuccessMessage>
-          <div className="text-gray-900 text-lg">{successMessage}</div>
-        </ShowSuccessMessage>
-      )}
     </div>
   );
 }
