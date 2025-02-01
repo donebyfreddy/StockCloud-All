@@ -39,111 +39,37 @@ C:.
 │   │   README.md
 │   │
 │   ├───controllers
+│   │       assetmanag_controller.js
+│   │       device_controller.js
+│   │       location_controller.js
 │   │       product_controller.js
-│   │       user_controllers.js
-│   │
-│   ├───db
-│   │       user_db.js
-│   │
+│   │       storage_controller.js
+│   │       user_controller.js
+│   │   
 │   ├───middlewares
+│   │       user_db.js
 │   │       user_auth.js
+│   │       user_utils.js
 │   │
 │   ├───models
-│   │       company_model.js
-│   │       history_model.js
-│   │       locations_models.js
-│   │       product_model.js
-│   │       user_model.js
+│   │   ├───assetmanagement
+│   │   │       asset_model.js
+│   │   │       storage_model.js
+│   │   ├───device_model.js
+│   │   ├───location_model.js
+│   │   ├───product_model.js
+│   │   ├───user_model.js
 │   │
 │   ├───routes
 │   │       analyticsRoutes.js
-│   │       companyRoutes.js
-│   │       historyRoutes.js
+│   │       assetManagementRoutes.js
+│   │       deviceRoutes.js
 │   │       locationRoutes.js
 │   │       productRoutes.js
-│   │       user_routes.js
+│   │       storageRoutes.js
+│   │       userRoutes.js
 │   │
-│   └───utils
-│           user_utils.js
-│
-└───Frontend
-    │   .env
-    │   .eslintrc.cjs
-    │   .gitignore
-    │   index.html
-    │   package-lock.json
-    │   package.json
-    │   postcss.config.js
-    │   README.md
-    │   tailwind.config.js
-    │   vite.config.js
-    │
-    ├───public
-    │       vite.svg
-    │
-    └───src
-        │   App.jsx
-        │   index.css
-        │   main.jsx
-        │   router.jsx
-        │
-        ├───assets
-        │       admin-logo.svg
-        │       authenticate.svg
-        │       menu.svg
-        │       react.svg
-        │       undraw_empty_re.svg
-        │       user-logo.svg
-        │
-        ├───components
-        │       HeaderBar.jsx
-        │       LoadingIndicator.jsx
-        │       LogoutButton.jsx
-        │       PopUpComponenet.jsx
-        │       ShowErrorMessage.jsx
-        │       ShowSuccessMesasge.jsx
-        │       SideNavbar.jsx
-        │       WarrantyExpiringProductsTableComponent.jsx
-        │
-        └───screens
-            │   InventoryFormScreen.jsx
-            │
-            ├───brands
-            │       BrandsScreen.jsx
-            │       EditBrandsScreen.jsx
-            │       NewBrandsScreen.jsx
-            │
-            ├───dashboard
-            │   │   DashBoardLayout.jsx
-            │   │   DashBoardScreen.jsx
-            │   │
-            │   └───components
-            │           AnalyticsComponent.jsx
-            │           PieChart.jsx
-            │
-            ├───locations
-            │       EditLocationScreen.jsx
-            │       LocationsScreen.jsx
-            │       NewLocationScreen.jsx
-            │
-            ├───login
-            │       AuthLayout.jsx
-            │       LoginScreen.jsx
-            │       SignupScreen.jsx
-            │
-            ├───product
-            │       AddNewProductScreen.jsx
-            │       ProductEditScreen.jsx
-            │       ProductHistoryScreen.jsx
-            │       ProductInfoScreen.jsx
-            │       ProductsScreen.jsx
-            │
-            └───users
-                │   UserManagementScreen.jsx
-                │
-                └───components
-                        ChangeRolePopup.jsx
-                        ManageUserTableRow.jsx
+
 ```
 
 ## Prerequisites
