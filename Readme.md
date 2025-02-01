@@ -150,7 +150,7 @@ C:.
 
 - Node.js
 - npm or yarn
-- MongoDB
+- SQL Server
 - 
 
 ## ENV
